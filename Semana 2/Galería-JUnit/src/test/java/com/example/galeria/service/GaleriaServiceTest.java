@@ -4,17 +4,25 @@ import com.example.galeria.model.Escultura;
 import com.example.galeria.model.Obra;
 import com.example.galeria.model.Pintura;
 import com.example.galeria.repository.ObraRepositoryImpl;
+import com.example.galeria.service.GaleriaService;
+import com.example.galeria.service.GaleriaServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GaleriaServiceTest {
 
+    private GaleriaService service;
+
+    @BeforeEach
+    public void setUp() {
+        // Se ejecuta antes de cada test para dar un estado limpio
+        service = new GaleriaServiceImpl(new ObraRepositoryImpl());
+    }
+
     @Test
     public void testAgregarYListarObras() {
-        ObraRepositoryImpl repo = new ObraRepositoryImpl();
-        GaleriaService service = new GaleriaServiceImpl(repo);
-
         Obra pintura = new Pintura("La noche estrellada", "Van Gogh", 1889, "Óleo");
         service.agregarObra(pintura);
 
@@ -24,9 +32,6 @@ public class GaleriaServiceTest {
 
     @Test
     public void testAgregarVariasObras() {
-        ObraRepositoryImpl repo = new ObraRepositoryImpl();
-        GaleriaService service = new GaleriaServiceImpl(repo);
-
         Obra p1 = new Pintura("La noche estrellada", "Van Gogh", 1889, "Óleo");
         Obra e1 = new Escultura("El Pensador", "Rodin", 1902, "Bronce");
 
@@ -38,9 +43,6 @@ public class GaleriaServiceTest {
 
     @Test
     public void testDescripcionPolimorfica() {
-        ObraRepositoryImpl repo = new ObraRepositoryImpl();
-        GaleriaService service = new GaleriaServiceImpl(repo);
-
         Obra pintura = new Pintura("La persistencia de la memoria", "Dalí", 1931, "Óleo");
         Obra escultura = new Escultura("David", "Miguel Ángel", 1504, "Mármol");
 
@@ -52,5 +54,4 @@ public class GaleriaServiceTest {
         assertEquals("Escultura: David por Miguel Ángel (1504), material: Mármol",
                 service.listarObras().get(1).descripcion());
     }
-
 }
