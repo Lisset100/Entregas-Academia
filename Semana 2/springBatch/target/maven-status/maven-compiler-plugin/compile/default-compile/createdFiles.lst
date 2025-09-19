@@ -1,0 +1,6 @@
+com\javatechie\spring\batch\config\SpringBatchConfig.class
+com\javatechie\spring\batch\controller\JobController.class
+com\javatechie\spring\batch\repository\CustomerRepository.class
+com\javatechie\spring\batch\BatchProcessingDemoApplication.class
+com\javatechie\spring\batch\config\CustomerProcessor.class
+com\javatechie\spring\batch\entity\Customer.class
