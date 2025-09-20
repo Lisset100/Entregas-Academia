@@ -1,7 +1,7 @@
 package com.javatechie.spring.batch.config;
 
-import com.javatechie.spring.batch.entity.Customer;
-import com.javatechie.spring.batch.repository.CustomerRepository;
+import com.javatechie.spring.batch.entity.Movie;
+import com.javatechie.spring.batch.repository.MovieRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -26,55 +26,57 @@ import org.springframework.core.task.TaskExecutor;
 public class SpringBatchConfig {
 
     private JobBuilderFactory jobBuilderFactory;
-
     private StepBuilderFactory stepBuilderFactory;
+    private MovieRepository movieRepository;
 
-    private CustomerRepository customerRepository;
-
-
+    // Reader: lee el CSV
     @Bean
-    public FlatFileItemReader<Customer> reader() {
-        FlatFileItemReader<Customer> itemReader = new FlatFileItemReader<>();
-        itemReader.setResource(new FileSystemResource("src/main/resources/customers.csv"));
+    public FlatFileItemReader<Movie> reader() {
+        FlatFileItemReader<Movie> itemReader = new FlatFileItemReader<>();
+        itemReader.setResource(new FileSystemResource("src/main/resources/movies.csv"));
         itemReader.setName("csvReader");
-        itemReader.setLinesToSkip(1);
+        itemReader.setLinesToSkip(1); // Saltar cabecera
         itemReader.setLineMapper(lineMapper());
         return itemReader;
     }
 
-    private LineMapper<Customer> lineMapper() {
-        DefaultLineMapper<Customer> lineMapper = new DefaultLineMapper<>();
+    // Mapper: mapea cada línea del CSV a un objeto Movie
+    private LineMapper<Movie> lineMapper() {
+        DefaultLineMapper<Movie> lineMapper = new DefaultLineMapper<>();
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
         lineTokenizer.setDelimiter(",");
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("id", "firstName", "lastName", "email", "gender", "contactNo", "country", "dob");
+        lineTokenizer.setNames("id","title","genre","rating","releaseYear");
 
-        BeanWrapperFieldSetMapper<Customer> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-        fieldSetMapper.setTargetType(Customer.class);
+        BeanWrapperFieldSetMapper<Movie> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(Movie.class);
 
         lineMapper.setLineTokenizer(lineTokenizer);
         lineMapper.setFieldSetMapper(fieldSetMapper);
         return lineMapper;
-
     }
 
+    // Processor: solo dejamos películas con rating >= 7
     @Bean
-    public CustomerProcessor processor() {
-        return new CustomerProcessor();
+    public MovieProcessor processor() {
+        return new MovieProcessor();
     }
 
+    // Writer: guarda los objetos en la base de datos
     @Bean
-    public RepositoryItemWriter<Customer> writer() {
-        RepositoryItemWriter<Customer> writer = new RepositoryItemWriter<>();
-        writer.setRepository(customerRepository);
+    public RepositoryItemWriter<Movie> writer() {
+        RepositoryItemWriter<Movie> writer = new RepositoryItemWriter<>();
+        writer.setRepository(movieRepository);
         writer.setMethodName("save");
         return writer;
     }
 
+    // Step: combina Reader, Processor y Writer
     @Bean
     public Step step1() {
-        return stepBuilderFactory.get("csv-step").<Customer, Customer>chunk(10)
+        return stepBuilderFactory.get("csv-step")
+                .<Movie, Movie>chunk(10)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
@@ -82,18 +84,20 @@ public class SpringBatchConfig {
                 .build();
     }
 
+    // Job: ejecuta el Step
     @Bean
     public Job runJob() {
-        return jobBuilderFactory.get("importCustomers")
-                .flow(step1()).end().build();
-
+        return jobBuilderFactory.get("importMovies")
+                .flow(step1())
+                .end()
+                .build();
     }
 
+    // TaskExecutor para concurrencia
     @Bean
     public TaskExecutor taskExecutor() {
         SimpleAsyncTaskExecutor asyncTaskExecutor = new SimpleAsyncTaskExecutor();
         asyncTaskExecutor.setConcurrencyLimit(10);
         return asyncTaskExecutor;
     }
-
 }

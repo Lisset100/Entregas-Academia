@@ -14,22 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/jobs")
-public class JobController {
+@RequestMapping("/movies/jobs")
+public class MovieJobController {
 
     @Autowired
-    private JobLauncher jobLauncher;
-    @Autowired
-    private Job job;
+    private JobLauncher jobLauncher; // 1
 
-    @PostMapping("/importCustomers")
-    public void importCsvToDBJob() {
-        JobParameters jobParameters = new JobParametersBuilder()
-                .addLong("startAt", System.currentTimeMillis()).toJobParameters();
+    @Autowired
+    private Job runJob; // 2
+
+    @PostMapping("/importMovies") // 3
+    public String importCsvToDBJob() {
+        JobParameters jobParameters = new JobParametersBuilder() // 4
+                .addLong("startAt", System.currentTimeMillis())
+                .toJobParameters();
         try {
-            jobLauncher.run(job, jobParameters);
-        } catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
+            jobLauncher.run(runJob, jobParameters); // 5
+            return "Movie import job started successfully!";
+        } catch (JobExecutionAlreadyRunningException | JobRestartException
+                 | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) { // 6
             e.printStackTrace();
+            return "Movie import job failed: " + e.getMessage();
         }
     }
 }
