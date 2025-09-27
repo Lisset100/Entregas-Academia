@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Pintor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.mongodb.crud.model</a>
+</div>
+
+<h1>Coverage Summary for Class: Pintor (com.mongodb.crud.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Pintor</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.mongodb.crud.model;
+&nbsp;
+&nbsp;import org.springframework.data.annotation.Id;
+&nbsp;import org.springframework.data.mongodb.core.mapping.Document;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Document(collection = &quot;pintores&quot;)
+&nbsp;public class Pintor {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    private String id;
+&nbsp;    private String nombre;
+&nbsp;    private String nacionalidad;
+&nbsp;    private String estilo;
+&nbsp;    private String fechaNacimiento;
+&nbsp;    private String fechaFallecimiento;
+&nbsp;    private List&lt;String&gt; obrasFamosas;
+&nbsp;    private List&lt;String&gt; imagenes; // URLs de obras famosas
+&nbsp;
+&nbsp;    // Constructor vacío
+<b class="nc">&nbsp;    public Pintor() {}</b>
+&nbsp;
+&nbsp;    // Constructor con todos los campos
+&nbsp;    public Pintor(String nombre, String nacionalidad, String estilo, String fechaNacimiento,
+<b class="nc">&nbsp;                  String fechaFallecimiento, List&lt;String&gt; obrasFamosas, List&lt;String&gt; imagenes) {</b>
+<b class="nc">&nbsp;        this.nombre = nombre;</b>
+<b class="nc">&nbsp;        this.nacionalidad = nacionalidad;</b>
+<b class="nc">&nbsp;        this.estilo = estilo;</b>
+<b class="nc">&nbsp;        this.fechaNacimiento = fechaNacimiento;</b>
+<b class="nc">&nbsp;        this.fechaFallecimiento = fechaFallecimiento;</b>
+<b class="nc">&nbsp;        this.obrasFamosas = obrasFamosas;</b>
+<b class="nc">&nbsp;        this.imagenes = imagenes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getters y Setters
+<b class="nc">&nbsp;    public String getId() { return id; }</b>
+<b class="nc">&nbsp;    public void setId(String id) { this.id = id; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getNombre() { return nombre; }</b>
+<b class="nc">&nbsp;    public void setNombre(String nombre) { this.nombre = nombre; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getNacionalidad() { return nacionalidad; }</b>
+<b class="nc">&nbsp;    public void setNacionalidad(String nacionalidad) { this.nacionalidad = nacionalidad; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getEstilo() { return estilo; }</b>
+<b class="nc">&nbsp;    public void setEstilo(String estilo) { this.estilo = estilo; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getFechaNacimiento() { return fechaNacimiento; }</b>
+<b class="nc">&nbsp;    public void setFechaNacimiento(String fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getFechaFallecimiento() { return fechaFallecimiento; }</b>
+<b class="nc">&nbsp;    public void setFechaFallecimiento(String fechaFallecimiento) { this.fechaFallecimiento = fechaFallecimiento; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public List&lt;String&gt; getObrasFamosas() { return obrasFamosas; }</b>
+<b class="nc">&nbsp;    public void setObrasFamosas(List&lt;String&gt; obrasFamosas) { this.obrasFamosas = obrasFamosas; }</b>
+&nbsp;
+<b class="nc">&nbsp;    public List&lt;String&gt; getImagenes() { return imagenes; }</b>
+<b class="nc">&nbsp;    public void setImagenes(List&lt;String&gt; imagenes) { this.imagenes = imagenes; }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-26 13:35</div>
+</div>
+</body>
+</html>
